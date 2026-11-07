@@ -1,0 +1,41 @@
+GT7 PS1 EDITION - juego de carreras 3D para PlayStation 1
+===========================================================
+
+Conversion del HTML "GT7_6.733.1" a PlayStation 1 (PSn00bSDK). Motor 3D por software
+(poligonos planos, billboards, niebla, sombras), todo con matematicas enteras.
+
+COMO COMPILARLO DESDE EL MOVIL (GitHub, sin PC)
+1. Crea un repositorio nuevo en github.com (privado o publico).
+2. "Add file > Upload files": sube TODO lo que hay dentro del zip (carpetas src y tools incluidas;
+   si el movil no deja subir carpetas, descomprime y sube por partes: primero CMakeLists.txt,
+   CMakePresets.json, iso.xml, LEEME.txt; luego la carpeta src con sus 8 archivos).
+3. El archivo del workflow va en la ruta  .github/workflows/build.yml
+   (Add file > Create new file, escribe esa ruta como nombre y pega el contenido de build.yml).
+4. Pestana Actions > "Compilar disco PS1" > Run workflow. Espera unos minutos.
+5. Entra en la ejecucion verde > abajo "Artifacts" > gt7-ps1 : contiene gt7.bin y gt7.cue.
+6. Abre gt7.cue en DuckStation / PCSX-Redux (en Android: DuckStation para movil).
+
+CONTROLES (mando PS1)
+ Menus:   Arriba/Abajo elegir, Izq/Der cambiar, X aceptar, O volver, START en titulo.
+ Carrera: X acelerar (o R2) | Cuadrado frenar (o L2) | Izq/Der o stick izquierdo girar
+          R1 o O: nitro | Triangulo: pedir parada en boxes | L1: cambiar neumaticos
+          SELECT: camara (tras/capo/lejana) | START: pausa
+ 2 jugadores: en "Carrera rapida" pon Jugador 2 -> pantalla dividida (mando 1 y mando 2).
+
+QUE INCLUYE
+ - 4 circuitos 3D, 8 coches (Porsche, Ferrari, McLaren, Mercedes, Aston, Rayo, F1, Kart)
+ - Garaje (color, aleron, seleccionar/vender), tuning de 43 piezas en 7 categorias, nitro
+ - Concesionario y mercado de coches de segunda mano (cambia en cada carrera)
+ - Boxes y neumaticos (blandos, medios, duros, intermedios, lluvia), combustible y desgaste
+ - Clima (sol, lluvia, tormenta, niebla) y hora (dia, atardecer, noche)
+ - 2 jugadores en pantalla dividida, 5 rivales IA igualados a tu coche, premios por posicion
+
+DIFERENCIAS CON EL HTML (limites de la PS1)
+ - Sin guardado (sin tarjeta de memoria): empiezas siempre con Porsche + 10000 cr.
+ - Sin constructor de coches ni imagenes propias, sin online, sin sonido.
+ - Los rivales de la IA no entran a boxes.
+ - Graficos de PS1 (poligonos planos, 320x240) con estilo moderno: no pueden ser de verdad "2020".
+
+AVISO HONESTO: el nucleo (fisica, economia, render, menus) esta probado en PC con simulaciones
+y capturas, pero el paso final con el compilador de PS1 no se ha podido ejecutar aqui.
+Si el workflow da error, mandame el mensaje de la pestana Actions y lo corrijo.

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<iso_project image_name="gt7.bin" cue_sheet="gt7.cue">
+	<track type="data">
+		<identifiers
+			system        ="PLAYSTATION"
+			application   ="PLAYSTATION"
+			volume        ="GT7PS1"
+			volume_set    ="GT7PS1"
+			publisher     ="ALECOS GAMES"
+			data_preparer ="PSN00BSDK"
+		/>
+
+		<!-- Para consolas SIN modificar hace falta ademas una licencia oficial:
+		     <license file="licencia.dat"/>  (no incluida) -->
+
+		<directory_tree>
+			<file name="SYSTEM.CNF" type="data" source="${PROJECT_SOURCE_DIR}/system.cnf"/>
+			<file name="GT7.EXE"    type="data" source="gt7.exe"/>
+			<dummy sectors="1024"/>
+		</directory_tree>
+	</track>
+</iso_project>
