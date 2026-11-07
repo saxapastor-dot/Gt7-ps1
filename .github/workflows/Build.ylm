@@ -1,0 +1,44 @@
+name: Compilar disco PS1
+
+on:
+  workflow_dispatch:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Instalar herramientas
+        run: sudo apt-get update && sudo apt-get install -y cmake ninja-build unzip
+
+      - name: Descargar PSn00bSDK
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release download --repo Lameguy64/PSn00bSDK --pattern '*Linux*.zip' --dir sdk
+          unzip -q sdk/*.zip -d psn00bsdk
+          find psn00bsdk -maxdepth 3 | head -40
+
+      - name: Crear system.cnf
+        run: printf 'BOOT=cdrom:\\GT7.EXE;1\nTCB=4\nEVENT=10\nSTACK=801FFFF0\n' > system.cnf
+
+      - name: Compilar
+        run: |
+          LIBS=$(find "$PWD/psn00bsdk" -type d -path '*/lib/libpsn00b' | head -1)
+          ROOT=$(realpath "$LIBS/../..")
+          chmod -R +x "$ROOT/bin" || true
+          find "$PWD/psn00bsdk" -type d -name bin -exec chmod -R +x {} \; || true
+          export PSN00BSDK_LIBS="$LIBS"
+          export PATH="$ROOT/bin:$(dirname "$(find "$PWD/psn00bsdk" -name 'mipsel-none-elf-gcc*' -type f | head -1)"):$PATH"
+          cmake --preset default .
+          cmake --build ./build
+
+      - name: Guardar el disco
+        uses: actions/upload-artifact@v4
+        with:
+          name: gt7-ps1
+          path: |
+            build/gt7.bin
+            build/gt7.cue
